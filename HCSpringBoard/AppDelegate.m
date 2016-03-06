@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "HCAssistant.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if (![ud boolForKey:kIsFirst]) {
+        [HCAssistant initMainMenu];
+        [ud setBool:YES forKey:kIsFirst];
+    }
     return YES;
 }
 

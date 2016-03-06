@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HCAssistant.h"
+#import "HCFavoriteIconModel.h"
+#import "NSObject+YYModel.h"
+#import "HCSpringBoardView.h"
 @interface ViewController : UIViewController
 
 

@@ -15,6 +15,11 @@
 		E3CCF75C1C895AA60018BABA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3CCF75A1C895AA60018BABA /* LaunchScreen.storyboard */; };
 		E3CCF7671C895AA70018BABA /* HCSpringBoardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7661C895AA70018BABA /* HCSpringBoardTests.m */; };
 		E3CCF7721C895AA70018BABA /* HCSpringBoardUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7711C895AA70018BABA /* HCSpringBoardUITests.m */; };
+		E3CCF7861C895DCB0018BABA /* HCAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7851C895DCB0018BABA /* HCAssistant.m */; };
+		E3CCF78C1C8964890018BABA /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7891C8964890018BABA /* NSObject+YYModel.m */; };
+		E3CCF78D1C8964890018BABA /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF78B1C8964890018BABA /* YYClassInfo.m */; };
+		E3CCF7B41C89685C0018BABA /* HCFavoriteIconModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7B31C89685C0018BABA /* HCFavoriteIconModel.m */; };
+		E3CCF7B71C8974390018BABA /* HCSpringBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7B61C8974390018BABA /* HCSpringBoardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,16 @@
 		E3CCF76D1C895AA70018BABA /* HCSpringBoardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HCSpringBoardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3CCF7711C895AA70018BABA /* HCSpringBoardUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCSpringBoardUITests.m; sourceTree = "<group>"; };
 		E3CCF7731C895AA70018BABA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3CCF7841C895DCB0018BABA /* HCAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCAssistant.h; sourceTree = "<group>"; };
+		E3CCF7851C895DCB0018BABA /* HCAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCAssistant.m; sourceTree = "<group>"; };
+		E3CCF7881C8964890018BABA /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
+		E3CCF7891C8964890018BABA /* NSObject+YYModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YYModel.m"; sourceTree = "<group>"; };
+		E3CCF78A1C8964890018BABA /* YYClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYClassInfo.h; sourceTree = "<group>"; };
+		E3CCF78B1C8964890018BABA /* YYClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYClassInfo.m; sourceTree = "<group>"; };
+		E3CCF7B21C89685C0018BABA /* HCFavoriteIconModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCFavoriteIconModel.h; sourceTree = "<group>"; };
+		E3CCF7B31C89685C0018BABA /* HCFavoriteIconModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteIconModel.m; sourceTree = "<group>"; };
+		E3CCF7B51C8974390018BABA /* HCSpringBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSpringBoardView.h; sourceTree = "<group>"; };
+		E3CCF7B61C8974390018BABA /* HCSpringBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSpringBoardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +116,7 @@
 		E3CCF74B1C895AA60018BABA /* HCSpringBoard */ = {
 			isa = PBXGroup;
 			children = (
+				E3CCF7831C895D900018BABA /* SpringBoard */,
 				E3CCF74F1C895AA60018BABA /* AppDelegate.h */,
 				E3CCF7501C895AA60018BABA /* AppDelegate.m */,
 				E3CCF7521C895AA60018BABA /* ViewController.h */,
@@ -138,6 +154,31 @@
 				E3CCF7731C895AA70018BABA /* Info.plist */,
 			);
 			path = HCSpringBoardUITests;
+			sourceTree = "<group>";
+		};
+		E3CCF7831C895D900018BABA /* SpringBoard */ = {
+			isa = PBXGroup;
+			children = (
+				E3CCF7871C8964890018BABA /* YYModel */,
+				E3CCF7841C895DCB0018BABA /* HCAssistant.h */,
+				E3CCF7851C895DCB0018BABA /* HCAssistant.m */,
+				E3CCF7B51C8974390018BABA /* HCSpringBoardView.h */,
+				E3CCF7B61C8974390018BABA /* HCSpringBoardView.m */,
+				E3CCF7B21C89685C0018BABA /* HCFavoriteIconModel.h */,
+				E3CCF7B31C89685C0018BABA /* HCFavoriteIconModel.m */,
+			);
+			path = SpringBoard;
+			sourceTree = "<group>";
+		};
+		E3CCF7871C8964890018BABA /* YYModel */ = {
+			isa = PBXGroup;
+			children = (
+				E3CCF7881C8964890018BABA /* NSObject+YYModel.h */,
+				E3CCF7891C8964890018BABA /* NSObject+YYModel.m */,
+				E3CCF78A1C8964890018BABA /* YYClassInfo.h */,
+				E3CCF78B1C8964890018BABA /* YYClassInfo.m */,
+			);
+			path = YYModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,8 +312,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3CCF7541C895AA60018BABA /* ViewController.m in Sources */,
+				E3CCF78C1C8964890018BABA /* NSObject+YYModel.m in Sources */,
+				E3CCF7861C895DCB0018BABA /* HCAssistant.m in Sources */,
 				E3CCF7511C895AA60018BABA /* AppDelegate.m in Sources */,
+				E3CCF78D1C8964890018BABA /* YYClassInfo.m in Sources */,
 				E3CCF74E1C895AA60018BABA /* main.m in Sources */,
+				E3CCF7B41C89685C0018BABA /* HCFavoriteIconModel.m in Sources */,
+				E3CCF7B71C8974390018BABA /* HCSpringBoardView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
