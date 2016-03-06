@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HCFavoriteIconModel.h"
 #import "HCAssistant.h"
 #import "HCIndexRect.h"
+#import "HCFavoriteFolderModel.h"
+#import "HCFavoriteFolderView.h"
+#import "HCFavoriteIconModel.h"
+#import "HCFavoriteIconView.h"
 
 @interface HCSpringBoardView : UIView <UIScrollViewDelegate>
 

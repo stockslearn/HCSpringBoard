@@ -73,6 +73,32 @@
         }
          [self layoutWithPages:scrollRect];
         
+        _favoriteViewArray = [[NSMutableArray alloc]init];
+        for (int i = 0; i < allPageSize; i++) {
+            CGRect loveIconRect = CGRectFromString(allFrame[i]);
+            
+            id model = models[i];
+            if ([model isKindOfClass:[HCFavoriteFolderModel class]]) {
+                HCFavoriteFolderModel *folderModel = model;
+                HCFavoriteFolderView *loveFolderView = [[HCFavoriteFolderView alloc]initWithFrame:loveIconRect model:folderModel];
+                loveFolderView.loveFolderDelegate = self;//尽量都在这里处理
+                loveFolderView.loveFolderLongGestureDelegate = self;
+                loveFolderView.tag = i;
+                [_favoriteViewArray addObject:loveFolderView];
+                [loveScrollView addSubview:loveFolderView];
+            }
+            else if ([model isKindOfClass:[HCFavoriteIconModel class]]) {
+                HCFavoriteIconModel *loveIconModel = model;
+                HCFavoriteIconView *loveIconView = [[HCFavoriteIconView alloc]initWithFrame:loveIconRect model:loveIconModel];
+                loveIconView.favoriteIconDelegate = self;//尽量都在这里处理
+                loveIconView.favoriteIconLongGestureDelegate = self;
+                loveIconView.tag = i;
+                [_favoriteViewArray addObject:loveIconView];
+                [loveScrollView addSubview:loveIconView];
+            }
+        }
+        
+        _favoriteModelArray = models;
         
     }
     return self;
