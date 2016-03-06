@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "HCFavoriteIconModel.h"
+#import "HCAssistant.h"
+#import "HCIndexRect.h"
 
-@interface HCSpringBoardView : UIView
+@interface HCSpringBoardView : UIView <UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *favoriteModelArray;
 @property (nonatomic, strong) NSMutableArray *favoriteViewArray;

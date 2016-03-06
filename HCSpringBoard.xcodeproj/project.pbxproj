@@ -20,6 +20,10 @@
 		E3CCF78D1C8964890018BABA /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF78B1C8964890018BABA /* YYClassInfo.m */; };
 		E3CCF7B41C89685C0018BABA /* HCFavoriteIconModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7B31C89685C0018BABA /* HCFavoriteIconModel.m */; };
 		E3CCF7B71C8974390018BABA /* HCSpringBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7B61C8974390018BABA /* HCSpringBoardView.m */; };
+		E3CCF7C91C8C74DA0018BABA /* HCIndexRect.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7C81C8C74DA0018BABA /* HCIndexRect.m */; };
+		E3CCF7CC1C8C78570018BABA /* HCFavoriteFolderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7CB1C8C78570018BABA /* HCFavoriteFolderModel.m */; };
+		E3CCF7CF1C8C78D30018BABA /* HCFavoriteIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7CE1C8C78D30018BABA /* HCFavoriteIconView.m */; };
+		E3CCF7D21C8C78E70018BABA /* HCFavoriteFolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7D11C8C78E70018BABA /* HCFavoriteFolderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +70,14 @@
 		E3CCF7B31C89685C0018BABA /* HCFavoriteIconModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteIconModel.m; sourceTree = "<group>"; };
 		E3CCF7B51C8974390018BABA /* HCSpringBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSpringBoardView.h; sourceTree = "<group>"; };
 		E3CCF7B61C8974390018BABA /* HCSpringBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSpringBoardView.m; sourceTree = "<group>"; };
+		E3CCF7C71C8C74DA0018BABA /* HCIndexRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCIndexRect.h; sourceTree = "<group>"; };
+		E3CCF7C81C8C74DA0018BABA /* HCIndexRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCIndexRect.m; sourceTree = "<group>"; };
+		E3CCF7CA1C8C78570018BABA /* HCFavoriteFolderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCFavoriteFolderModel.h; sourceTree = "<group>"; };
+		E3CCF7CB1C8C78570018BABA /* HCFavoriteFolderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteFolderModel.m; sourceTree = "<group>"; };
+		E3CCF7CD1C8C78D30018BABA /* HCFavoriteIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCFavoriteIconView.h; sourceTree = "<group>"; };
+		E3CCF7CE1C8C78D30018BABA /* HCFavoriteIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteIconView.m; sourceTree = "<group>"; };
+		E3CCF7D01C8C78E70018BABA /* HCFavoriteFolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCFavoriteFolderView.h; sourceTree = "<group>"; };
+		E3CCF7D11C8C78E70018BABA /* HCFavoriteFolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteFolderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +178,14 @@
 				E3CCF7B61C8974390018BABA /* HCSpringBoardView.m */,
 				E3CCF7B21C89685C0018BABA /* HCFavoriteIconModel.h */,
 				E3CCF7B31C89685C0018BABA /* HCFavoriteIconModel.m */,
+				E3CCF7CA1C8C78570018BABA /* HCFavoriteFolderModel.h */,
+				E3CCF7CB1C8C78570018BABA /* HCFavoriteFolderModel.m */,
+				E3CCF7CD1C8C78D30018BABA /* HCFavoriteIconView.h */,
+				E3CCF7CE1C8C78D30018BABA /* HCFavoriteIconView.m */,
+				E3CCF7D01C8C78E70018BABA /* HCFavoriteFolderView.h */,
+				E3CCF7D11C8C78E70018BABA /* HCFavoriteFolderView.m */,
+				E3CCF7C71C8C74DA0018BABA /* HCIndexRect.h */,
+				E3CCF7C81C8C74DA0018BABA /* HCIndexRect.m */,
 			);
 			path = SpringBoard;
 			sourceTree = "<group>";
@@ -311,10 +331,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3CCF7CC1C8C78570018BABA /* HCFavoriteFolderModel.m in Sources */,
 				E3CCF7541C895AA60018BABA /* ViewController.m in Sources */,
+				E3CCF7C91C8C74DA0018BABA /* HCIndexRect.m in Sources */,
 				E3CCF78C1C8964890018BABA /* NSObject+YYModel.m in Sources */,
 				E3CCF7861C895DCB0018BABA /* HCAssistant.m in Sources */,
 				E3CCF7511C895AA60018BABA /* AppDelegate.m in Sources */,
+				E3CCF7CF1C8C78D30018BABA /* HCFavoriteIconView.m in Sources */,
+				E3CCF7D21C8C78E70018BABA /* HCFavoriteFolderView.m in Sources */,
 				E3CCF78D1C8964890018BABA /* YYClassInfo.m in Sources */,
 				E3CCF74E1C895AA60018BABA /* main.m in Sources */,
 				E3CCF7B41C89685C0018BABA /* HCFavoriteIconModel.m in Sources */,
@@ -544,6 +568,7 @@
 				E3CCF7781C895AA70018BABA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E3CCF7791C895AA70018BABA /* Build configuration list for PBXNativeTarget "HCSpringBoardTests" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +577,7 @@
 				E3CCF77B1C895AA70018BABA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E3CCF77C1C895AA70018BABA /* Build configuration list for PBXNativeTarget "HCSpringBoardUITests" */ = {
 			isa = XCConfigurationList;
@@ -560,6 +586,7 @@
 				E3CCF77E1C895AA70018BABA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

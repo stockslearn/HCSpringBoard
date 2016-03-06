@@ -18,6 +18,9 @@
 
 #pragma mark - 尺寸
 #define kScreenSize [[UIScreen mainScreen] bounds].size
+#define ScreenHeight [UIScreen mainScreen].bounds.size.height
+#define ScreenWidth [UIScreen mainScreen].bounds.size.width
+
 #define IPHONE4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(320, 480), [[UIScreen mainScreen] currentMode].size) : NO)
 
 #define IPHONE4S ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
@@ -27,6 +30,14 @@
 #define IPHONE6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
 
 #define IPHONE6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define ICONIMG_WIDTH ([[UIScreen mainScreen] bounds].size.width-1)/3
+#define ICONIMG_HEIGHT IPHONE6Plus? 100:75
+
+#define ICONIMG_LEVEL 1
+#define ICONIMG_LEVEL_SPACE 0.5
+#define ICONIMG_VERTICAL 30
+#define ICONIMG_VERTICAL_SPACE 0.5
 
 #pragma mark - 文件路径
 #define kMenuFileName @"menu.json"
