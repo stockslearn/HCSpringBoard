@@ -74,7 +74,7 @@
 #define kNavigationObject @"kNavigationObject"
 
 @interface HCAssistant : NSObject
-
+//生成菜单结构
 + (void)initMainMenu;
 
 @end

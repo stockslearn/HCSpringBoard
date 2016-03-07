@@ -27,6 +27,7 @@
         folderNameField.delegate = self;
         folderNameField.clearButtonMode = UITextFieldViewModeAlways;
         folderNameField.textAlignment = NSTextAlignmentCenter;
+        folderNameField.returnKeyType = UIReturnKeyDone;
         [self addSubview:folderNameField];
         
         [self addTarget:self action:@selector(hideFloatView:) forControlEvents:UIControlEventTouchUpInside];

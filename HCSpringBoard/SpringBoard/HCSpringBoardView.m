@@ -75,8 +75,6 @@ const NSInteger drawIconTag = 222;
                            initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+10, ScreenWidth, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
-//        lovePageControl.backgroundColor = [UIColor greenColor];
-//        self.backgroundColor = [UIColor yellowColor];
         [self addSubview: lovePageControl];
         
         pagesView = [[NSMutableArray alloc]init];
@@ -88,6 +86,7 @@ const NSInteger drawIconTag = 222;
         }
          [self layoutWithPages:scrollRect];
         
+        //根据不同的数据模型创建对应的图标和文件夹
         _favoriteViewArray = [[NSMutableArray alloc]init];
         for (int i = 0; i < allPageSize; i++) {
             CGRect loveIconRect = CGRectFromString(allFrame[i]);
@@ -96,7 +95,8 @@ const NSInteger drawIconTag = 222;
             if ([model isKindOfClass:[HCFavoriteFolderModel class]]) {
                 HCFavoriteFolderModel *folderModel = model;
                 HCFavoriteFolderView *loveFolderView = [[HCFavoriteFolderView alloc]initWithFrame:loveIconRect model:folderModel];
-                loveFolderView.loveFolderDelegate = self;//尽量都在这里处理
+                //代理要处理手势和点击等事件
+                loveFolderView.loveFolderDelegate = self;
                 loveFolderView.loveFolderLongGestureDelegate = self;
                 loveFolderView.tag = i;
                 [_favoriteViewArray addObject:loveFolderView];
@@ -105,7 +105,8 @@ const NSInteger drawIconTag = 222;
             else if ([model isKindOfClass:[HCFavoriteIconModel class]]) {
                 HCFavoriteIconModel *loveIconModel = model;
                 HCFavoriteIconView *loveIconView = [[HCFavoriteIconView alloc]initWithFrame:loveIconRect model:loveIconModel];
-                loveIconView.favoriteIconDelegate = self;//尽量都在这里处理
+                //代理要处理手势和点击等事件
+                loveIconView.favoriteIconDelegate = self;
                 loveIconView.favoriteIconLongGestureDelegate = self;
                 loveIconView.tag = i;
                 [_favoriteViewArray addObject:loveIconView];
@@ -140,11 +141,12 @@ const NSInteger drawIconTag = 222;
     CGPoint pointAtWindow = [gesture locationInView:AppWindow];
     CGPoint currentOrigin = CGPointMake(pointAtWindow.x-lastPoint.x, pointAtWindow.y-lastPoint.y);
     if (_isDraw) {
+        //_drawLoveIconView在window上的移动
         _drawLoveIconView.frame = CGRectMake(currentOrigin.x, currentOrigin.y, _drawLoveIconView.frame.size.width, _drawLoveIconView.frame.size.height);
         
         CGPoint scrollPoint = [gesture locationInView:loveScrollView];
         NSInteger fromIndex = _loveFromIndex;
-        //检测速度
+        //检测速度 检测是要换位置还是要合并文件夹 和滑动速度相关
         double fingerSpeed = [self fingerMoveSpeadWithPreviousPoint:_previousWindowMovePoint andNowPoint:pointAtWindow];
         //NSLog(@"速度：%f",fingerSpeed);
         //上次的移动点，为计算速度。使用过后更新点
@@ -156,7 +158,9 @@ const NSInteger drawIconTag = 222;
 
         if (toIndex != -1 && toIndex < (_favoriteViewArray.count - 1) && fromIndex < (_favoriteViewArray.count - 1)) {
             _toLoveIconView = _favoriteViewArray[toIndex];
+            
             if (isFolder && toIndex != fromIndex) {
+                //显示出文件夹四格横线的动画
                 if ([_toLoveIconView isKindOfClass:[HCFavoriteIconView class]]) {
                     HCFavoriteIconView *toLoveItemView = (HCFavoriteIconView *)_toLoveIconView;
                     toLoveItemView.isShowFolderFlag = YES;
@@ -176,10 +180,11 @@ const NSInteger drawIconTag = 222;
                     toLoveItemView.isShowScaleFolderLayer = NO;
                 }
                 //2以下的慢速过程中进入的判断，此时可能点已经进入到了文件夹的区域内。
+                //可以调整敏感度
                 if (fingerSpeed < 2) {//是否合并
                     NSLog(@"toIndex:%ld",toIndex);
                     if (toIndex != fromIndex) {
-                        
+                        //操作数据源
                         [_favoriteModelArray removeObjectAtIndex:fromIndex];
                         [_favoriteModelArray insertObject:loveView.loveIconModel atIndex:toIndex];
                         [_favoriteViewArray removeObjectAtIndex:fromIndex];
@@ -188,14 +193,14 @@ const NSInteger drawIconTag = 222;
                         //更新Tag重要
                         _loveFromIndex = toIndex;
                         [self updateTags];
-                        
+                        //移动动画
                         [self deleteIconLayoutWithMenuIcons:_favoriteViewArray];
                         
                     }
                 }
             }
         }
-        
+        //判断是否换页面
         [self toPageWithPoint:scrollPoint];
     }
 }
@@ -230,7 +235,7 @@ const NSInteger drawIconTag = 222;
                 //操作数据
                 /*
                  1，这里先做生成文件夹，之后再做判断落点是不是文件夹。进行已有文件夹的合并。
-                 2，在_loveModelArray里面只有CSIILoveIconModel的情况下，插入CSIILoveFolderModel的模型。前面的创建首页菜单的工作要修改。
+                 2，在_favoriteModelArray里面只有HCFavoriteIconModel的情况下，插入HCFavoriteIconModel的模型。
                  */
                 HCFavoriteIconView *fromView = _favoriteViewArray[fromIndex];
                 UIView *toView = _favoriteViewArray[toIndex];
@@ -278,7 +283,7 @@ const NSInteger drawIconTag = 222;
                 }
                 
                 [self updateTags];
-                //刷新界面用_loveIconArray
+                //刷新界面
                 [self updateMenuUIWithLoveIconArray];
             }
             else {
@@ -317,12 +322,12 @@ const NSInteger drawIconTag = 222;
 }
 
 #pragma mark - HCLoveFolderLongGestureDelegate
+//文件夹的逻辑就是排序，比较简单。
 - (void)longGestureStateBegin:(UILongPressGestureRecognizer *)gesture forLoveFolderView:(HCFavoriteFolderView *)loveFolderView{
     loveFolderView.hidden = YES;
     
     CGPoint beginPoint = [gesture locationInView:loveFolderView];
     lastPoint = CGPointMake(beginPoint.x*1.5, beginPoint.y*1.5);
-    //_isDraw 肯定是yes，进入编辑模式的回调在此回调之前
     CGPoint pointAtWindow = [gesture locationInView:AppWindow];
     _previousWindowMovePoint = pointAtWindow;
 }
@@ -382,6 +387,7 @@ const NSInteger drawIconTag = 222;
 }
 
 #pragma mark - OutsideFolderGestureDelegate
+//这里比较重要，是从文件夹里拖出来，将那里的手势代理到这里，逻辑和前面的一样。
 - (void)loveFolderOutsideBeginGesture:(UILongPressGestureRecognizer *)gesture
                              menuView:(HCFavoriteFolderMenuView *)menuView
                              fromView:(HCFavoriteIconView *)iconView {
@@ -527,7 +533,7 @@ const NSInteger drawIconTag = 222;
         }
     }
     [self updateMenuUIWithLoveIconArray];
-    //重设代理
+    //重要，重设代理
     iconView.favoriteIconDelegate = self;
     iconView.favoriteIconLongGestureDelegate = self;
 }
@@ -541,6 +547,7 @@ const NSInteger drawIconTag = 222;
 }
 
 #pragma mark - HCLoveFolderDelegate
+//进入文件夹
 - (void)openLoveFolderOfLoveFolderView:(HCFavoriteFolderView *)loveFolderView {
     HCFavoriteFolderFloatView *folderFloatView = [[HCFavoriteFolderFloatView alloc]initWithModel:loveFolderView.loveFolderModel];
     folderFloatView.loveFolderView = loveFolderView;
@@ -554,6 +561,7 @@ const NSInteger drawIconTag = 222;
         folderFloatView.alpha = 1;
     }];
 }
+//编辑模式
 - (void)intoEditingModeOfLoveFolderView:(HCFavoriteFolderView *)loveFolderView {
     HCFavoriteFolderView *drawIcon = (HCFavoriteFolderView *)[self drawIconWithCurrentIcon:loveFolderView];
     
@@ -577,7 +585,7 @@ const NSInteger drawIconTag = 222;
         
         [self deleteIconLayoutWithMenuIcons:_favoriteViewArray];
         [iconView removeFromSuperview];
-        
+        //这里是更新全部菜单的是否显示属性。
         [self updateIconModelDisplay:self.favoriteMainMenu nodeIndex:iconView.loveIconModel.nodeIndex];
         [self archiverIconModelsArray];
         [self archiverLoveMenuMainModel];

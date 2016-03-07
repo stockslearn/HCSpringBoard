@@ -24,6 +24,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    //获取序列化到本地的所有菜单
     NSDictionary *mainMenuDict = [[NSDictionary alloc]initWithContentsOfFile:DOCUMENT_FOLDER(kMenuFileName)];
     _favoriteMainMenu = [HCFavoriteIconModel modelWithDictionary:mainMenuDict];
     [self displayMenu];
@@ -74,21 +75,21 @@
         [_springBoard removeFromSuperview];
     }
     
+    //根据数据显示菜单
     CGRect sbRect = CGRectMake(0, 100, kScreenSize.width, 400);
     _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
-//    _springBoard.backgroundColor = [UIColor whiteColor];
     _springBoard.springBoardDelegate = self;
     _springBoard.tag = SpringBoardTag;
     [self.view addSubview:_springBoard];
 }
 
 #pragma mark - BankListDelegate
+//显示在列表页勾选图标
 - (void)addIconDone:(HCBankListViewController *)bankListViewController {
     CGRect sbRect = CGRectMake(0, 100, kScreenSize.width,400);
     
     [_springBoard removeFromSuperview];
     _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
-//    _springBoard.backgroundColor = [UIColor whiteColor];
     _springBoard.springBoardDelegate = self;
     _springBoard.tag = SpringBoardTag;
     [self.view addSubview:_springBoard];
