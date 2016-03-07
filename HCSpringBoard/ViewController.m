@@ -9,7 +9,6 @@
 #import "ViewController.h"
 
 @interface ViewController () {
-    HCFavoriteIconModel *_favoriteMainMenu;
     
     NSMutableArray *_iconModelsArray;
     
@@ -68,6 +67,21 @@
     _springBoard.backgroundColor = [UIColor greenColor];
     _springBoard.tag = SpringBoardTag;
     [self.view addSubview:_springBoard];
+}
+
+#pragma mark - BankListDelegate
+- (void)addIconDone:(HCBankListViewController *)bankListViewController {
+    CGRect sbRect = CGRectMake(0, 150, kScreenSize.width, 340);
+    
+    [_springBoard removeFromSuperview];
+    _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
+    _springBoard.backgroundColor = [UIColor greenColor];
+    _springBoard.tag = SpringBoardTag;
+    [self.view addSubview:_springBoard];
+    
+    //序列化
+    [_springBoard archiverIconModelsArray];
+    [_springBoard archiverLoveMenuMainModel];
 }
 
 //递归查找需要显示的图标

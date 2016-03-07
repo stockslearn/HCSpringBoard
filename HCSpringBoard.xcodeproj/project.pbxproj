@@ -24,6 +24,9 @@
 		E3CCF7CC1C8C78570018BABA /* HCFavoriteFolderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7CB1C8C78570018BABA /* HCFavoriteFolderModel.m */; };
 		E3CCF7CF1C8C78D30018BABA /* HCFavoriteIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7CE1C8C78D30018BABA /* HCFavoriteIconView.m */; };
 		E3CCF7D21C8C78E70018BABA /* HCFavoriteFolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7D11C8C78E70018BABA /* HCFavoriteFolderView.m */; };
+		E3CCF7D51C8D1D540018BABA /* HCBankListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7D41C8D1D540018BABA /* HCBankListViewController.m */; };
+		E3CCF7D81C8D26330018BABA /* HCFavoriteFolderFloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7D71C8D26330018BABA /* HCFavoriteFolderFloatView.m */; };
+		E3CCF7DB1C8D27C00018BABA /* HCFavoriteFolderMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CCF7DA1C8D27C00018BABA /* HCFavoriteFolderMenuView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +81,12 @@
 		E3CCF7CE1C8C78D30018BABA /* HCFavoriteIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteIconView.m; sourceTree = "<group>"; };
 		E3CCF7D01C8C78E70018BABA /* HCFavoriteFolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCFavoriteFolderView.h; sourceTree = "<group>"; };
 		E3CCF7D11C8C78E70018BABA /* HCFavoriteFolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteFolderView.m; sourceTree = "<group>"; };
+		E3CCF7D31C8D1D540018BABA /* HCBankListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCBankListViewController.h; sourceTree = "<group>"; };
+		E3CCF7D41C8D1D540018BABA /* HCBankListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCBankListViewController.m; sourceTree = "<group>"; };
+		E3CCF7D61C8D26330018BABA /* HCFavoriteFolderFloatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCFavoriteFolderFloatView.h; sourceTree = "<group>"; };
+		E3CCF7D71C8D26330018BABA /* HCFavoriteFolderFloatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteFolderFloatView.m; sourceTree = "<group>"; };
+		E3CCF7D91C8D27C00018BABA /* HCFavoriteFolderMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCFavoriteFolderMenuView.h; sourceTree = "<group>"; };
+		E3CCF7DA1C8D27C00018BABA /* HCFavoriteFolderMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteFolderMenuView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +195,12 @@
 				E3CCF7D11C8C78E70018BABA /* HCFavoriteFolderView.m */,
 				E3CCF7C71C8C74DA0018BABA /* HCIndexRect.h */,
 				E3CCF7C81C8C74DA0018BABA /* HCIndexRect.m */,
+				E3CCF7D61C8D26330018BABA /* HCFavoriteFolderFloatView.h */,
+				E3CCF7D71C8D26330018BABA /* HCFavoriteFolderFloatView.m */,
+				E3CCF7D91C8D27C00018BABA /* HCFavoriteFolderMenuView.h */,
+				E3CCF7DA1C8D27C00018BABA /* HCFavoriteFolderMenuView.m */,
+				E3CCF7D31C8D1D540018BABA /* HCBankListViewController.h */,
+				E3CCF7D41C8D1D540018BABA /* HCBankListViewController.m */,
 			);
 			path = SpringBoard;
 			sourceTree = "<group>";
@@ -339,7 +354,10 @@
 				E3CCF7511C895AA60018BABA /* AppDelegate.m in Sources */,
 				E3CCF7CF1C8C78D30018BABA /* HCFavoriteIconView.m in Sources */,
 				E3CCF7D21C8C78E70018BABA /* HCFavoriteFolderView.m in Sources */,
+				E3CCF7D51C8D1D540018BABA /* HCBankListViewController.m in Sources */,
+				E3CCF7DB1C8D27C00018BABA /* HCFavoriteFolderMenuView.m in Sources */,
 				E3CCF78D1C8964890018BABA /* YYClassInfo.m in Sources */,
+				E3CCF7D81C8D26330018BABA /* HCFavoriteFolderFloatView.m in Sources */,
 				E3CCF74E1C895AA60018BABA /* main.m in Sources */,
 				E3CCF7B41C89685C0018BABA /* HCFavoriteIconModel.m in Sources */,
 				E3CCF7B71C8974390018BABA /* HCSpringBoardView.m in Sources */,

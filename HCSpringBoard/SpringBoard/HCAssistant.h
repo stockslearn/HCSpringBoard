@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark Tags
+#define angelToRandian(x) ((x)/180.0*M_PI)
+
+#pragma mark - window
+#define AppWindow ((AppDelegate *)[[UIApplication sharedApplication] delegate]).window
+
+#pragma mark - Tags
 #define SpringBoardTag 90
 
 #pragma mark - UserDefaultKey
