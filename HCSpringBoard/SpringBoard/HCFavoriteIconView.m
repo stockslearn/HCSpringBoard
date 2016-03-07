@@ -7,6 +7,7 @@
 //
 
 #import "HCFavoriteIconView.h"
+#import "HCAssistant.h"
 
 static const CGFloat iconButtonWitdh = 30.0f;
 static const CGFloat iconDeleteButtonWitdh = 20.0f;
@@ -27,11 +28,12 @@ static const CGFloat iconLabelFont = 13.0f;
     if (self) {
         self.userInteractionEnabled = YES;
         
-        menuButton = [[UIButton alloc]initWithFrame:CGRectMake((frame.size.width-iconButtonWitdh)/2, 20, iconButtonWitdh, iconButtonWitdh)];
+        
+        menuButton = [[UIButton alloc]initWithFrame:CGRectMake((frame.size.width-iconButtonWitdh)/2, 20.0/320.0*ScreenWidth, iconButtonWitdh, iconButtonWitdh)];
         [menuButton addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:menuButton];
         
-        menuLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(menuButton.frame)+5, CGRectGetWidth(frame)-10, iconLabelHeight)];
+        menuLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(menuButton.frame)+5.0/320.0*ScreenWidth, CGRectGetWidth(frame)-10, iconLabelHeight)];
         menuLabel.numberOfLines = 0;
         menuLabel.textAlignment = NSTextAlignmentCenter;
         menuLabel.font = [UIFont systemFontOfSize:iconLabelFont];
@@ -61,8 +63,9 @@ static const CGFloat iconLabelFont = 13.0f;
         newFlagView.hidden = YES;
         
         //文件夹layer
+        CGFloat layerSize = CGRectGetWidth(frame)-60.0/320.0*ScreenWidth;
         folderLayer = [[CALayer alloc]init];
-        folderLayer.frame = CGRectMake(30, 10, CGRectGetWidth(frame)-60, CGRectGetWidth(frame)-60);
+        folderLayer.frame = CGRectMake((frame.size.width-layerSize)/2, 10.0/320.0*ScreenWidth, layerSize, layerSize);
         folderLayer.borderWidth = .5f;
         folderLayer.borderColor = [UIColor lightGrayColor].CGColor;
         folderLayer.opacity = .5f;
@@ -109,7 +112,7 @@ static const CGFloat iconLabelFont = 13.0f;
     if (_isShowFolderFlag) {
         folderLayer.hidden = NO;
         [UIView animateWithDuration:0.6 animations:^{
-            [folderLayer setAffineTransform:CGAffineTransformMakeScale(1.3, 1.3)];
+            [folderLayer setAffineTransform:CGAffineTransformMakeScale(1.2, 1.2)];
         }];
     }
     else {

@@ -8,6 +8,7 @@
 
 #import "HCFavoriteFolderView.h"
 #import "HCFavoriteIconModel.h"
+#import "HCAssistant.h"
 
 static const CGFloat iconLabelHeight = 36.0f;
 static const CGFloat iconLabelFont = 13.0f;
@@ -25,8 +26,9 @@ static const CGFloat littleIconSpace = 3;
         self.userInteractionEnabled = YES;
         littleIconViewArray = [[NSMutableArray alloc]initWithCapacity:4];
         //文件夹四格layer
+        CGFloat layerSize = CGRectGetWidth(frame)-60.0/320.0*ScreenWidth;
         folderLayer = [[CALayer alloc]init];
-        folderLayer.frame = CGRectMake(30, 10, CGRectGetWidth(frame)-60, CGRectGetWidth(frame)-60);
+        folderLayer.frame = CGRectMake((CGRectGetWidth(frame)-layerSize)/2.0, 10, layerSize, layerSize);
         folderLayer.borderWidth = .5f;
         folderLayer.borderColor = [UIColor lightGrayColor].CGColor;
         folderLayer.cornerRadius = 5;
@@ -70,7 +72,8 @@ static const CGFloat littleIconSpace = 3;
         [littleIconViewArray addObject:littleIconView03];
         [littleIconViewArray addObject:littleIconView04];
         
-        menuLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 55, CGRectGetWidth(frame)-10, iconLabelHeight)];
+        CGFloat labelWidth = CGRectGetWidth(frame)-10.0/320.0*ScreenWidth;
+        menuLabel = [[UILabel alloc]initWithFrame:CGRectMake((frame.size.width-labelWidth)/2, 55.0/320.0*ScreenWidth, labelWidth, iconLabelHeight)];
         menuLabel.numberOfLines = 0;
         menuLabel.textAlignment = NSTextAlignmentCenter;
         menuLabel.font = [UIFont systemFontOfSize:iconLabelFont];
@@ -113,7 +116,7 @@ static const CGFloat littleIconSpace = 3;
     //可加动画
     if (_isShowScaleFolderLayer) {
         [UIView animateWithDuration:0.6 animations:^{
-            [folderLayer setAffineTransform:CGAffineTransformMakeScale(1.3, 1.3)];
+            [folderLayer setAffineTransform:CGAffineTransformMakeScale(1.2, 1.2)];
         }];
     }
     else {

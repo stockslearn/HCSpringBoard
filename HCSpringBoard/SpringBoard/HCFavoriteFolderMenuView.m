@@ -572,13 +572,7 @@
 }
 #pragma mark - 判断需要多少行高
 - (NSInteger)getOnePageRomByDevice {
-    NSInteger row = 2;
-    if (IPHONE5 || IPHONE6) {
-        row = 3;
-    }else if (IPHONE6Plus){
-        row = 4;
-    }
-    return row;
+    return 3;
 }
 #pragma mark - 计算需要展示的icon的所有Frame
 - (NSMutableArray *)getAllPageIconsFrameArrayWithOnePageRect:(NSArray *)onePageArray

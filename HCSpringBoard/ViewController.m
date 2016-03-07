@@ -76,7 +76,7 @@
     }
     
     //根据数据显示菜单
-    CGRect sbRect = CGRectMake(0, 100, kScreenSize.width, 400);
+    CGRect sbRect = CGRectMake(0, 100, kScreenSize.width, [self getOnePageRomByDevice]*(ICONIMG_HEIGHT+0.5)+40);
     _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
     _springBoard.springBoardDelegate = self;
     _springBoard.tag = SpringBoardTag;
@@ -86,7 +86,7 @@
 #pragma mark - BankListDelegate
 //显示在列表页勾选图标
 - (void)addIconDone:(HCBankListViewController *)bankListViewController {
-    CGRect sbRect = CGRectMake(0, 100, kScreenSize.width,400);
+    CGRect sbRect = CGRectMake(0, 100, kScreenSize.width, [self getOnePageRomByDevice]*(ICONIMG_HEIGHT+0.5)+40);
     
     [_springBoard removeFromSuperview];
     _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
@@ -112,6 +112,14 @@
             [self getDisplayIcon:favoroteModel.itemList[i]];
         }
     }
+}
+
+- (NSInteger)getOnePageRomByDevice {
+    NSInteger row = 3;
+    if (IPHONE6Plus){
+        row = 4;
+    }
+    return row;
 }
 
 @end
