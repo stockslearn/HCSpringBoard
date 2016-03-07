@@ -13,8 +13,8 @@
 
 @interface HCFavoriteFolderFloatView : UIControl <UITextFieldDelegate>
 
-@property (nonatomic, strong) id myControllerDelegate;
-@property (nonatomic, strong) id mySpringBoardDelegate;
+@property (nonatomic, assign) id myControllerDelegate;
+@property (nonatomic, assign) id mySpringBoardDelegate;
 @property (nonatomic, strong) HCFavoriteFolderModel *loveFolderModel;
 @property (nonatomic, strong) HCFavoriteFolderView *loveFolderView;
 
