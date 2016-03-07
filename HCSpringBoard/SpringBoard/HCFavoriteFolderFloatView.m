@@ -62,9 +62,8 @@
     if ([_mySpringBoardDelegate isKindOfClass:[HCSpringBoardView class]]) {
         HCSpringBoardView *springBoard = _mySpringBoardDelegate;
         if (springBoard.isEdit) {
-            [springBoard showEditButton];
+            [folderMenuView showEditButton];
         }
-        
         folderMenuView.outsideFolderGestureDelegate = springBoard;
     }
 }
@@ -75,7 +74,7 @@
         [alertView show];
     }
     else {
-        [self.myControllerDelegate archiverIconModelsArray];
+        [self.mySpringBoardDelegate archiverIconModelsArray];
         [folderNameField resignFirstResponder];
         
         [UIView animateWithDuration:0.3 animations:^{

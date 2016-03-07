@@ -293,46 +293,49 @@
                 }
             }
         }
-        if (toIndex == -1) {
-            //图标拖到了外面
-            if (_isDrawOutside == NO) {
-                _isDrawOutside = YES;
-                if (_folderMenuDelegate && [_folderMenuDelegate isKindOfClass:[HCFavoriteFolderFloatView class]]) {
-                    HCFavoriteFolderFloatView *floatView = _folderMenuDelegate;
-                    [floatView hideFloatView:nil];
-                    //此时，在主页创建一个图标，添加到第一个。
-                }
-                
-                if (_outsideFolderGestureDelegate && [_outsideFolderGestureDelegate isKindOfClass:[HCSpringBoardView class]]) {
-                    if ([_outsideFolderGestureDelegate respondsToSelector:@selector(loveFolderOutsideBeginGesture:menuView:fromView:)]) {
-                        [_outsideFolderGestureDelegate loveFolderOutsideBeginGesture:gesture menuView:self fromView:loveView];
-                    }
-                }
-                
-                if (_outsideFolderGestureDelegate && [_outsideFolderGestureDelegate isKindOfClass:[HCSpringBoardView class]]) {
-                    HCSpringBoardView *springBoard = _outsideFolderGestureDelegate;
-                    if (![springBoard.favoriteModelArray containsObject:loveView.loveIconModel]) {
-                        
-                        [springBoard.favoriteModelArray insertObject:loveView.loveIconModel atIndex:0];
-                        [springBoard.favoriteViewArray insertObject:loveView atIndex:0];
-                        
-                        [_folderMenuModelArray removeObjectAtIndex:loveView.tag];
-                        [_folderMenuIconArray removeObjectAtIndex:loveView.tag];
-
-                        //刷新最爱文件夹的小图标图案
-                        [self updateLoveFolderLittleIcon];
-                        
-                        //翻到第一页，把图标默认加到第一个。
-                        [springBoard updateMenuIconsFrame];
-                        springBoard.currentPage = 0;
-                    }
-                    
-                }
-                self.userInteractionEnabled = NO;
-            }
-        }
+        
         //2以下的慢速过程中进入的判断，此时可能点已经进入到了文件夹的区域内。
         if (fingerSpeed < 2) {//是否合并
+            NSLog(@"menu view toindex:%ld",toIndex);
+            if (toIndex == -1) {
+                //图标拖到了外面
+                if (_isDrawOutside == NO) {
+                    _isDrawOutside = YES;
+                    if (_folderMenuDelegate && [_folderMenuDelegate isKindOfClass:[HCFavoriteFolderFloatView class]]) {
+                        HCFavoriteFolderFloatView *floatView = _folderMenuDelegate;
+                        [floatView hideFloatView:nil];
+                        //此时，在主页创建一个图标，添加到第一个。
+                    }
+                    
+                    if (_outsideFolderGestureDelegate && [_outsideFolderGestureDelegate isKindOfClass:[HCSpringBoardView class]]) {
+                        if ([_outsideFolderGestureDelegate respondsToSelector:@selector(loveFolderOutsideBeginGesture:menuView:fromView:)]) {
+                            [_outsideFolderGestureDelegate loveFolderOutsideBeginGesture:gesture menuView:self fromView:loveView];
+                        }
+                    }
+                    
+                    if (_outsideFolderGestureDelegate && [_outsideFolderGestureDelegate isKindOfClass:[HCSpringBoardView class]]) {
+                        HCSpringBoardView *springBoard = _outsideFolderGestureDelegate;
+                        if (![springBoard.favoriteModelArray containsObject:loveView.loveIconModel]) {
+                            
+                            [springBoard.favoriteModelArray insertObject:loveView.loveIconModel atIndex:0];
+                            [springBoard.favoriteViewArray insertObject:loveView atIndex:0];
+                            
+                            [_folderMenuModelArray removeObjectAtIndex:loveView.tag];
+                            [_folderMenuIconArray removeObjectAtIndex:loveView.tag];
+                            
+                            //刷新最爱文件夹的小图标图案
+                            [self updateLoveFolderLittleIcon];
+                            
+                            //翻到第一页，把图标默认加到第一个。
+                            [springBoard updateMenuIconsFrame];
+                            springBoard.currentPage = 0;
+                        }
+                        
+                    }
+                    self.userInteractionEnabled = NO;
+                }
+            }
+            
             if (toIndex != -1 && toIndex < (_folderMenuModelArray.count) && fromIndex < (_folderMenuModelArray.count)) {
                 _toLoveIconView = _folderMenuIconArray[toIndex];
                 if (toIndex != fromIndex) {
@@ -487,7 +490,7 @@
             return @{@"toIndex":@(indexRect.iconIndex),@"isFolder":@NO};
         }
     }
-    return @{@"toIndex":@(-1),@"isFolder":@NO};;
+    return @{@"toIndex":@(-1),@"isFolder":@NO};
 }
 - (NSInteger)toIndexChangeWithPoint:(CGPoint)scrollPoint{
     scrollPoint = CGPointMake(scrollPoint.x, scrollPoint.y);
@@ -603,6 +606,8 @@
             NSInteger index = j + onePage*i;
             
             //组织判断区域
+            iconRect.size.width += 5;
+            iconRect.size.height += 5;
             HCIndexRect *indexRect = [[HCIndexRect alloc]initWithIndex:index rect:iconRect];
             [indexRectArray addObject:indexRect];
         }

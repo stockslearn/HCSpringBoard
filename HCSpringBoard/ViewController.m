@@ -22,10 +22,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     NSDictionary *mainMenuDict = [[NSDictionary alloc]initWithContentsOfFile:DOCUMENT_FOLDER(kMenuFileName)];
     _favoriteMainMenu = [HCFavoriteIconModel modelWithDictionary:mainMenuDict];
     [self displayMenu];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (_springBoard) {
+        if (_springBoard.isEdit) {
+            [_springBoard showEditButton];
+        }
+    }
 }
 
 - (void)displayMenu {
@@ -62,9 +73,10 @@
     if ([self.view viewWithTag:90]) {
         [_springBoard removeFromSuperview];
     }
+    
     CGRect sbRect = CGRectMake(0, 100, kScreenSize.width, 400);
     _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
-    _springBoard.backgroundColor = [UIColor greenColor];
+//    _springBoard.backgroundColor = [UIColor whiteColor];
     _springBoard.springBoardDelegate = self;
     _springBoard.tag = SpringBoardTag;
     [self.view addSubview:_springBoard];
@@ -72,11 +84,12 @@
 
 #pragma mark - BankListDelegate
 - (void)addIconDone:(HCBankListViewController *)bankListViewController {
-    CGRect sbRect = CGRectMake(0, 100, kScreenSize.width, 400);
+    CGRect sbRect = CGRectMake(0, 100, kScreenSize.width,400);
     
     [_springBoard removeFromSuperview];
     _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
-    _springBoard.backgroundColor = [UIColor greenColor];
+//    _springBoard.backgroundColor = [UIColor whiteColor];
+    _springBoard.springBoardDelegate = self;
     _springBoard.tag = SpringBoardTag;
     [self.view addSubview:_springBoard];
     
@@ -98,11 +111,6 @@
             [self getDisplayIcon:favoroteModel.itemList[i]];
         }
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

@@ -11,6 +11,7 @@
 #import "ViewController.h"
 #import "HCBankListViewController.h"
 #import "HCFavoriteFolderFloatView.h"
+#import "HCFavoriteFolderMenuView.h"
 
 @interface HCSpringBoardView()
 {
@@ -48,6 +49,7 @@ const NSInteger drawIconTag = 222;
         NSInteger rowOnePage = [self getOnePageRomByDevice];
         iconsOnePageFrameArray = [self getOnePageIconsFrameArrayWithRowNumber:rowOnePage];
         
+        
         //单页icon数
         onePageSize = rowOnePage * 3;
         NSInteger allPageSize = [models count];
@@ -59,7 +61,7 @@ const NSInteger drawIconTag = 222;
                                                         pageCount:pageCount
                                                    andOnePageIcon:onePageSize];
         
-        CGRect scrollRect = CGRectMake(0, 0, ScreenWidth, CGRectGetHeight(self.frame));
+        CGRect scrollRect = CGRectMake(0, 40, ScreenWidth, CGRectGetHeight(frame)-60);
         loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
         loveScrollView.bounces = NO;
         loveScrollView.pagingEnabled = YES;
@@ -70,15 +72,16 @@ const NSInteger drawIconTag = 222;
         [self addSubview:loveScrollView];
         
         lovePageControl = [[UIPageControl alloc]
-                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame), ScreenWidth, 20)];
+                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+10, ScreenWidth, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
 //        lovePageControl.backgroundColor = [UIColor greenColor];
+//        self.backgroundColor = [UIColor yellowColor];
         [self addSubview: lovePageControl];
         
         pagesView = [[NSMutableArray alloc]init];
         for (int i = 0; i < pageCount; i++) {
-            UIView *page = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, self.frame.size.height)];
+            UIView *page = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, CGRectGetHeight(loveScrollView.frame))];
             page.userInteractionEnabled = YES;
             [self addLineAtPageWithOnePageRow:rowOnePage andPageView:page];
             [pagesView addObject:page];
@@ -112,12 +115,16 @@ const NSInteger drawIconTag = 222;
         
         _favoriteModelArray = models;
         
-        if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[ViewController class]]) {
-            ViewController *controller = (ViewController *)_springBoardDelegate;
-            self.favoriteMainMenu = controller.favoriteMainMenu;
-        }
     }
     return self;
+}
+
+- (void)setSpringBoardDelegate:(id<HCSpringBoardDelegate>)springBoardDelegate {
+    _springBoardDelegate = springBoardDelegate;
+    if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[ViewController class]]) {
+        ViewController *controller = (ViewController *)_springBoardDelegate;
+        self.favoriteMainMenu = controller.favoriteMainMenu;
+    }
 }
 #pragma mark - HCFavoriteIconLongGestureDelegate
 - (void)longGestureStateBegin:(UILongPressGestureRecognizer *)gesture forLoveView:(HCFavoriteIconView *)loveView{
@@ -374,6 +381,165 @@ const NSInteger drawIconTag = 222;
     }
 }
 
+#pragma mark - OutsideFolderGestureDelegate
+- (void)loveFolderOutsideBeginGesture:(UILongPressGestureRecognizer *)gesture
+                             menuView:(HCFavoriteFolderMenuView *)menuView
+                             fromView:(HCFavoriteIconView *)iconView {
+    _loveFromIndex = 0;
+    _isDraw =  YES;
+}
+- (void)loveFolderOutsideMoveGesture:(UILongPressGestureRecognizer *)gesture menuView:(HCFavoriteFolderMenuView *)menuView fromView:(HCFavoriteIconView *)iconView{
+    
+    CGPoint pointAtWindow = [gesture locationInView:AppWindow];
+    CGPoint scrollPoint = [gesture locationInView:loveScrollView];
+    NSInteger fromIndex =_loveFromIndex;
+    double fingerSpeed = [self fingerMoveSpeadWithPreviousPoint:_previousWindowMovePoint andNowPoint:pointAtWindow];
+    _previousWindowMovePoint = pointAtWindow;
+    
+    NSDictionary *toIndexDict = [self toIndexWithPoint:scrollPoint];
+    NSInteger toIndex = [toIndexDict[@"toIndex"] integerValue];
+    
+    BOOL isFolder = [toIndexDict[@"isFolder"] boolValue];
+    
+    if (toIndex != -1 && toIndex < (_favoriteViewArray.count - 1) && fromIndex < (_favoriteViewArray.count - 1)) {
+        _toLoveIconView = _favoriteViewArray[toIndex];
+        if (isFolder && toIndex != fromIndex) {
+            if ([_toLoveIconView isKindOfClass:[HCFavoriteIconView class]]) {
+                HCFavoriteIconView *toLoveItemView = (HCFavoriteIconView *)_toLoveIconView;
+                toLoveItemView.isShowFolderFlag = YES;
+            }
+            else if ([_toLoveIconView isKindOfClass:[HCFavoriteFolderView class]]) {
+                HCFavoriteFolderView *toLoveItemView = (HCFavoriteFolderView *)_toLoveIconView;
+                toLoveItemView.isShowScaleFolderLayer = YES;
+            }
+        }
+        else {
+            if ([_toLoveIconView isKindOfClass:[HCFavoriteIconView class]]) {
+                HCFavoriteIconView *toLoveItemView = (HCFavoriteIconView *)_toLoveIconView;
+                toLoveItemView.isShowFolderFlag = NO;
+            }
+            else if ([_toLoveIconView isKindOfClass:[HCFavoriteFolderView class]]) {
+                HCFavoriteFolderView *toLoveItemView = (HCFavoriteFolderView *)_toLoveIconView;
+                toLoveItemView.isShowScaleFolderLayer = NO;
+            }
+            
+            if (fingerSpeed < 2) {
+                if (toIndex != fromIndex) {
+                    
+                    [_favoriteModelArray removeObjectAtIndex:fromIndex];
+                    [_favoriteModelArray insertObject:iconView.loveIconModel atIndex:toIndex];
+                    [_favoriteViewArray removeObjectAtIndex:fromIndex];
+                    [_favoriteViewArray insertObject:iconView atIndex:toIndex];
+                    //更新Tag重要
+                    _loveFromIndex = toIndex;
+                    [self updateTags];
+                    
+                    [self deleteIconLayoutWithMenuIcons:_favoriteViewArray];
+                }
+            }
+            
+        }
+    }
+    
+}
+- (void)loveFolderOutsideEndGesture:(UILongPressGestureRecognizer *)gesture menuView:(HCFavoriteFolderMenuView *)menuView fromView:(HCFavoriteIconView *)iconView{
+    iconView.hidden = NO;
+    
+    if (_isDraw) {
+        _isDraw = NO;
+        [_drawLoveIconView removeFromSuperview];
+        if ([_toLoveIconView isKindOfClass:[HCFavoriteIconView class]]) {
+            HCFavoriteIconView *toLoveItemView = (HCFavoriteIconView *)_toLoveIconView;
+            toLoveItemView.isShowFolderFlag = NO;
+        }
+        else if ([_toLoveIconView isKindOfClass:[HCFavoriteFolderView class]]) {
+            HCFavoriteFolderView *toLoveItemView = (HCFavoriteFolderView *)_toLoveIconView;
+            toLoveItemView.isShowScaleFolderLayer = NO;
+        }
+        
+        //判断当前点在不在文件夹里
+        CGPoint scrollPoint = [gesture locationInView:loveScrollView];
+        NSDictionary *toIndexDict = [self toIndexWithPoint:scrollPoint];
+        NSInteger toIndex = [toIndexDict[@"toIndex"] integerValue];
+        NSInteger fromIndex = _loveFromIndex;
+        BOOL isFolder = [toIndexDict[@"isFolder"] boolValue];
+        
+        if (toIndex != -1 && toIndex < (_favoriteViewArray.count - 1) && fromIndex < (_favoriteViewArray.count - 1)) {
+            _toLoveIconView = _favoriteViewArray[toIndex];
+            if (isFolder && toIndex != fromIndex) {
+                
+                HCFavoriteIconView *fromView = _favoriteViewArray[fromIndex];
+                UIView *toView = _favoriteViewArray[toIndex];
+                HCFavoriteIconModel *fromModel = _favoriteModelArray[fromIndex];
+                id toModel = _favoriteModelArray[toIndex];
+                
+                //合并到已有文件夹
+                if ([toView isKindOfClass:[HCFavoriteFolderView class]]) {
+                    [_favoriteModelArray removeObjectAtIndex:fromIndex];
+                    HCFavoriteFolderModel *folderModel = toModel;
+                    [folderModel.iconModelsFolderArray addObject:fromModel];
+                    
+                    [_favoriteViewArray removeObjectAtIndex:fromIndex];
+                    [folderModel.iconViewsFolderArray addObject:fromView];
+                    
+                    [folderModel updateTagFolderModel];
+                    //更新显示的小图标
+                    HCFavoriteFolderView *folderView = (HCFavoriteFolderView *)toView;
+                    folderView.loveFolderModel = folderModel;
+                }
+                //两图标合并
+                else if ([toView isKindOfClass:[HCFavoriteIconView class]]) {
+                    HCFavoriteFolderModel *folderModel = [[HCFavoriteFolderModel alloc]init];
+                    folderModel.folderName = @"文件夹";
+                    folderModel.iconViewsFolderArray = [@[toView,fromView] mutableCopy];
+                    folderModel.iconModelsFolderArray = [@[toModel,fromModel] mutableCopy];
+                    
+                    CGRect loveFolderRect = CGRectFromString(allFrame[toIndex]);
+                    HCFavoriteFolderView *loveFolderView = [[HCFavoriteFolderView alloc]initWithFrame:loveFolderRect model:folderModel];
+                    loveFolderView.loveFolderDelegate = self;
+                    loveFolderView.loveFolderLongGestureDelegate = self;
+                    
+                    [_favoriteModelArray removeObjectAtIndex:fromIndex];
+                    [_favoriteModelArray replaceObjectAtIndex:toIndex withObject:folderModel];
+                    
+                    [_favoriteViewArray removeObjectAtIndex:fromIndex];
+                    [_favoriteViewArray replaceObjectAtIndex:toIndex withObject:loveFolderView];
+                }
+                
+                [self updateTags];
+                //刷新界面用_loveIconArray
+                [self updateMenuUIWithLoveIconArray];
+            }
+            else {
+                if (toIndex != fromIndex) {
+                    [_favoriteModelArray removeObjectAtIndex:fromIndex];
+                    [_favoriteModelArray insertObject:iconView atIndex:toIndex];
+                    [_favoriteViewArray removeObjectAtIndex:fromIndex];
+                    [_favoriteViewArray insertObject:iconView atIndex:toIndex];
+                    //更新Tag重要
+                    _loveFromIndex = toIndex;
+                    [self updateTags];
+                    
+                    [self deleteIconLayoutWithMenuIcons:_favoriteViewArray];
+                    //交换之后本地序列化
+                }
+            }
+        }
+    }
+    [self updateMenuUIWithLoveIconArray];
+    //重设代理
+    iconView.favoriteIconDelegate = self;
+    iconView.favoriteIconLongGestureDelegate = self;
+}
+- (void)loveFolderOutsideCancelGesture:(UILongPressGestureRecognizer *)gesture menuView:(HCFavoriteFolderMenuView *)menuView fromView:(HCFavoriteIconView *)iconView{
+    iconView.hidden = NO;
+    
+    [self updateMenuUIWithLoveIconArray];
+    //重设代理
+    iconView.favoriteIconDelegate = self;
+    iconView.favoriteIconLongGestureDelegate = self;
+}
+
 #pragma mark - HCLoveFolderDelegate
 - (void)openLoveFolderOfLoveFolderView:(HCFavoriteFolderView *)loveFolderView {
     HCFavoriteFolderFloatView *folderFloatView = [[HCFavoriteFolderFloatView alloc]initWithModel:loveFolderView.loveFolderModel];
@@ -422,9 +588,13 @@ const NSInteger drawIconTag = 222;
     }];
 }
 - (void)pushPageOfLoveIconView:(HCFavoriteIconView *)iconView {
-    
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"下一页" message:iconView.loveIconModel.targetController delegate:nil cancelButtonTitle:@"返回" otherButtonTitles:nil, nil];
-    [alert show];
+    if (!_isEdit) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"下一页" message:iconView.loveIconModel.targetController delegate:nil cancelButtonTitle:@"返回" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else {
+        [self doneButtonAction:nil];
+    }
 }
 - (void)intoEditingModeOfLoveIconView:(HCFavoriteIconView *)iconView {
     if ([iconView.loveIconModel.name isEqualToString:@"添加"]) {
@@ -608,6 +778,14 @@ const NSInteger drawIconTag = 222;
         obj.frame = CGRectFromString(allFrame[i]);
         [loveScrollView addSubview:obj];
     }
+    
+    pageCount = [self getPagesNumberWithAllIcon:_favoriteViewArray.count
+                                 andOnePageIcon:onePageSize];
+    lovePageControl.numberOfPages = pageCount;
+    loveScrollView.contentSize = CGSizeMake(ScreenWidth * pageCount, CGRectGetHeight(loveScrollView.frame));
+    if (loveScrollView.contentOffset.x >= loveScrollView.contentSize.width) {
+        lovePageControl.currentPage = lovePageControl.numberOfPages-1;
+    }
 }
 - (void)updateAllFramesArray:(NSArray *)allIcons {
     pageCount = [self getPagesNumberWithAllIcon:allIcons.count
@@ -711,7 +889,7 @@ const NSInteger drawIconTag = 222;
 #pragma mark - 贴上PageView
 - (void)layoutWithPages:(CGRect)pageRect{
     loveScrollView.contentOffset = CGPointMake(0.0, 0.0);
-    loveScrollView.contentSize = CGSizeMake(CGRectGetWidth(pageRect) * [pagesView count], 0);
+    loveScrollView.contentSize = CGSizeMake(CGRectGetWidth(pageRect) * [pagesView count], CGRectGetHeight(loveScrollView.frame));
     lovePageControl.numberOfPages = [pagesView count];
     lovePageControl.currentPage = 0;
     
