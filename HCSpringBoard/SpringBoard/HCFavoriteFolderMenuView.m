@@ -53,7 +53,7 @@
                                                         pageCount:pageCount
                                                    andOnePageIcon:onePageSize];
         
-        CGRect scrollRect = CGRectMake(0, 0, ScreenWidth-20, CGRectGetHeight(self.frame));
+        CGRect scrollRect = CGRectMake(0, 0, ScreenWidth-20, rowOnePage*(ICONIMG_HEIGHT_Float+0.5)+1);
         loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
         loveScrollView.bounces = NO;
         loveScrollView.pagingEnabled = YES;
@@ -64,14 +64,14 @@
         [self addSubview:loveScrollView];
         
         lovePageControl = [[UIPageControl alloc]
-                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)-30, ScreenWidth, 20)];
+                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+5, ScreenWidth, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
         [self addSubview: lovePageControl];
         
         pages = [[NSMutableArray alloc]init];
         for (int i = 0; i < pageCount; i++) {
-            UIView *page = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width-20, self.frame.size.height)];
+            UIView *page = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width-20, CGRectGetHeight(loveScrollView.frame))];
             page.userInteractionEnabled = YES;
             [self addLineAtPageWithOnePageRow:rowOnePage andPageView:page];
             [pages addObject:page];
@@ -546,27 +546,19 @@
 - (void)addLineAtPageWithOnePageRow:(NSInteger)rowOnePage andPageView:(UIView *)page {
     //横线
     for (int i=0; i<rowOnePage+1; i++) {
-        UILabel *lineLabel = nil;
-        if(IPHONE5 || IPHONE6){
-            lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, i*(ICONIMG_HEIGHT+ICONIMG_VERTICAL-5)+ICONIMG_VERTICAL_SPACE, self.frame.size.width, 0.5)];
-        }else{
-            lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, i*(ICONIMG_HEIGHT+ICONIMG_VERTICAL)+ICONIMG_VERTICAL_SPACE, self.frame.size.width, 0.5)];
-        }
-        lineLabel.backgroundColor = [UIColor lightGrayColor];
-        lineLabel.alpha = 0.5;
-        [page addSubview:lineLabel];
+        UIView *line = nil;
+        line = [[UILabel alloc] initWithFrame:CGRectMake(0, i*(ICONIMG_HEIGHT_Float+ICONIMG_VERTICAL_SPACE), ScreenWidth-20, 0.5)];
+        line.backgroundColor = [UIColor lightGrayColor];
+        line.alpha = 0.5;
+        [page addSubview:line];
     }
     //竖线
     for (int i=0; i<3; i++) {
-        UILabel *lineLabel = nil;
-        if(IPHONE5 || IPHONE6){
-            lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((ICON_WIDTH_FOLDER+0.5)*i+(i-1)*0.5, 0.5, 0.5, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_VERTICAL)+ICONIMG_VERTICAL_SPACE-15)];
-        }else{
-            lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((ICON_WIDTH_FOLDER+0.5)*i+(i-1)*0.5, 0.5, 0.5, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_VERTICAL)+ICONIMG_VERTICAL_SPACE)];
-        }
-        lineLabel.backgroundColor = [UIColor lightGrayColor];
-        lineLabel.alpha = 0.5;
-        [page addSubview:lineLabel];
+        UIView *line = nil;
+        line = [[UIView alloc] initWithFrame:CGRectMake((ICONIMG_WIDTH_Float+0.5)*i, 0.5, 0.5, rowOnePage*(ICONIMG_HEIGHT_Float+ICONIMG_VERTICAL_SPACE))];
+        line.backgroundColor = [UIColor lightGrayColor];
+        line.alpha = 0.5;
+        [page addSubview:line];
     }
 }
 
@@ -622,7 +614,7 @@
     NSMutableArray *iconRectArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < row; i++) {
         for (int j = 0;j < 3; j++) {
-            CGRect rect = CGRectMake(j*(((ScreenWidth-20)/3)+ICONIMG_LEVEL_SPACE), i*(ICONIMG_HEIGHT+25+ICONIMG_VERTICAL_SPACE), ICON_WIDTH_FOLDER-7, ICONIMG_HEIGHT+25-7);
+            CGRect rect = CGRectMake(j*(ICONIMG_WIDTH_Float+ICONIMG_LEVEL_SPACE), i*(ICONIMG_HEIGHT_Float+ICONIMG_VERTICAL_SPACE)+0.5, ICONIMG_WIDTH_Float, ICONIMG_HEIGHT_Float);
             [iconRectArray addObject:NSStringFromCGRect(rect)];
         }
     }

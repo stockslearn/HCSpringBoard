@@ -48,8 +48,6 @@ const NSInteger drawIconTag = 222;
         allFrame = [[NSMutableArray alloc]init];
         NSInteger rowOnePage = [self getOnePageRomByDevice];
         iconsOnePageFrameArray = [self getOnePageIconsFrameArrayWithRowNumber:rowOnePage];
-        
-        
         //单页icon数
         onePageSize = rowOnePage * 3;
         NSInteger allPageSize = [models count];
@@ -61,7 +59,7 @@ const NSInteger drawIconTag = 222;
                                                         pageCount:pageCount
                                                    andOnePageIcon:onePageSize];
         
-        CGRect scrollRect = CGRectMake(0, 40, ScreenWidth, CGRectGetHeight(frame)-60);
+        CGRect scrollRect = CGRectMake(0, 40, ScreenWidth, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_LEVEL_SPACE)+1);
         loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
         loveScrollView.bounces = NO;
         loveScrollView.pagingEnabled = YES;
@@ -75,6 +73,7 @@ const NSInteger drawIconTag = 222;
                            initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+10, ScreenWidth, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
+//        lovePageControl.backgroundColor = [UIColor redColor];
         [self addSubview: lovePageControl];
         
         pagesView = [[NSMutableArray alloc]init];
@@ -913,30 +912,20 @@ const NSInteger drawIconTag = 222;
 #pragma mark - 给pageView加横竖线 破代码待优化
 - (void)addLineAtPageWithOnePageRow:(NSInteger)rowOnePage andPageView:(UIView *)page {
     //横线
-    for (int i=0; i<rowOnePage+1; i++) {
-        UILabel *lineLabel = nil;
-        if(IPHONE5 || IPHONE6){
-            lineLabel = [[UILabel alloc]
-                         initWithFrame:CGRectMake(0, i*(ICONIMG_HEIGHT+ICONIMG_VERTICAL-5)+ICONIMG_VERTICAL_SPACE, self.frame.size.width, 0.5)];
-        }else{
-            lineLabel = [[UILabel alloc]
-                         initWithFrame:CGRectMake(0, i*(ICONIMG_HEIGHT+ICONIMG_VERTICAL)+ICONIMG_VERTICAL_SPACE, self.frame.size.width, 0.5)];
-        }
-        lineLabel.backgroundColor = [UIColor lightGrayColor];
-        lineLabel.alpha = 0.5;
-        [page addSubview:lineLabel];
+    for (int i = 0 ; i < rowOnePage + 1; i++) {
+        UIView *line = nil;
+        line = [[UIView alloc]initWithFrame:CGRectMake(0, i*(ICONIMG_HEIGHT+ICONIMG_VERTICAL_SPACE), ScreenWidth, 0.5)];
+        line.backgroundColor = [UIColor lightGrayColor];
+        line.alpha = 0.5;
+        [page addSubview:line];
     }
     //竖线
-    for (int i=0; i<3; i++) {
-        UILabel *lineLabel = nil;
-        if(IPHONE5 || IPHONE6){
-            lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((ICONIMG_WIDTH+0.5)*i+(i-1)*0.5, 0.5, 0.5, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_VERTICAL)+ICONIMG_VERTICAL_SPACE-15)];
-        }else{
-            lineLabel = [[UILabel alloc] initWithFrame:CGRectMake((ICONIMG_WIDTH+0.5)*i+(i-1)*0.5, 0.5, 0.5, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_VERTICAL)+ICONIMG_VERTICAL_SPACE)];
-        }
-        lineLabel.backgroundColor = [UIColor lightGrayColor];
-        lineLabel.alpha = 0.5;
-        [page addSubview:lineLabel];
+    for (int i = 0 ; i < 3; i++) {
+        UILabel *line = nil;
+        line = [[UILabel alloc] initWithFrame:CGRectMake((ICONIMG_WIDTH+0.5)*i, 0.5, 0.5, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_VERTICAL))];
+        line.backgroundColor = [UIColor lightGrayColor];
+        line.alpha = 0.5;
+        [page addSubview:line];
     }
 }
 #pragma mark - 计算需要展示的icon的所有Frame
@@ -976,10 +965,8 @@ const NSInteger drawIconTag = 222;
 }
 #pragma mark - 判断需要多少行高
 - (NSInteger)getOnePageRomByDevice {
-    NSInteger row = 2;
-    if (IPHONE5 || IPHONE6) {
-        row = 3;
-    }else if (IPHONE6Plus){
+    NSInteger row = 3;
+    if (IPHONE6Plus){
         row = 4;
     }
     return row;
@@ -989,7 +976,7 @@ const NSInteger drawIconTag = 222;
     NSMutableArray *iconRectArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < row; i++) {
         for (int j = 0;j < 3; j++) {
-            CGRect rect = CGRectMake(j*((ScreenWidth/3)+ICONIMG_LEVEL_SPACE), i*(ICONIMG_HEIGHT+25+ICONIMG_VERTICAL_SPACE), ICONIMG_WIDTH, ICONIMG_HEIGHT+25);
+            CGRect rect = CGRectMake(j*((ScreenWidth/3)+ICONIMG_LEVEL_SPACE), i*(ICONIMG_HEIGHT+ICONIMG_VERTICAL_SPACE), ICONIMG_WIDTH, ICONIMG_HEIGHT);
             [iconRectArray addObject:NSStringFromCGRect(rect)];
         }
     }

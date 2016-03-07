@@ -37,7 +37,9 @@
 #define IPHONE6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
 
 #define ICONIMG_WIDTH ([[UIScreen mainScreen] bounds].size.width-1)/3
-#define ICONIMG_HEIGHT IPHONE6Plus? 100:75
+#define ICONIMG_HEIGHT ICONIMG_WIDTH
+#define ICONIMG_WIDTH_Float ([[UIScreen mainScreen] bounds].size.width-21)/3
+#define ICONIMG_HEIGHT_Float ICONIMG_WIDTH_Float+5
 
 #define ICONIMG_LEVEL 1
 #define ICONIMG_LEVEL_SPACE 0.5

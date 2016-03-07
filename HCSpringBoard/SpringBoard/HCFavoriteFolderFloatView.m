@@ -94,4 +94,11 @@
     self.loveFolderView.folderName = textField.text;
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    self.loveFolderModel.folderName = textField.text;
+    self.loveFolderView.folderName = textField.text;
+    [textField resignFirstResponder];
+    return YES;
+}
+
 @end
