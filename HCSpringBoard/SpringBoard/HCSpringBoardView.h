@@ -17,8 +17,6 @@
 
 @protocol HCSpringBoardDelegate <NSObject>
 
-
-
 @end
 
 extern const NSInteger drawIconTag;

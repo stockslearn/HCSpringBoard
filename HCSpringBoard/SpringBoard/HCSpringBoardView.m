@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "HCBankListViewController.h"
+#import "HCFavoriteFolderFloatView.h"
 
 @interface HCSpringBoardView()
 {
@@ -69,9 +70,10 @@ const NSInteger drawIconTag = 222;
         [self addSubview:loveScrollView];
         
         lovePageControl = [[UIPageControl alloc]
-                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+10, ScreenWidth, 20)];
+                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame), ScreenWidth, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
+//        lovePageControl.backgroundColor = [UIColor greenColor];
         [self addSubview: lovePageControl];
         
         pagesView = [[NSMutableArray alloc]init];
@@ -374,7 +376,17 @@ const NSInteger drawIconTag = 222;
 
 #pragma mark - HCLoveFolderDelegate
 - (void)openLoveFolderOfLoveFolderView:(HCFavoriteFolderView *)loveFolderView {
+    HCFavoriteFolderFloatView *folderFloatView = [[HCFavoriteFolderFloatView alloc]initWithModel:loveFolderView.loveFolderModel];
+    folderFloatView.loveFolderView = loveFolderView;
+    folderFloatView.loveMainModels = _favoriteModelArray;
+    folderFloatView.myControllerDelegate = self.springBoardDelegate;
+    folderFloatView.mySpringBoardDelegate = self;
+    [AppWindow addSubview:folderFloatView];
     
+    folderFloatView.alpha = 0;
+    [UIView animateWithDuration:0.3 animations:^{
+        folderFloatView.alpha = 1;
+    }];
 }
 - (void)intoEditingModeOfLoveFolderView:(HCFavoriteFolderView *)loveFolderView {
     HCFavoriteFolderView *drawIcon = (HCFavoriteFolderView *)[self drawIconWithCurrentIcon:loveFolderView];

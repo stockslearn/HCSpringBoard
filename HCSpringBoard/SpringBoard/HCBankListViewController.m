@@ -18,7 +18,7 @@
 @implementation HCBankListViewController
 
 - (instancetype)initWithMainMenu:(NSArray *)mainMenu {
-    self = [super init];
+    self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         _mainMenuList = mainMenu;
     }
@@ -152,7 +152,7 @@
         
         //"温馨提示"内容
         UILabel *heartAlert = [[UILabel alloc]initWithFrame:CGRectMake(8,30, ScreenWidth-16, 40)];
-        label.font = [UIFont systemFontOfSize:14];
+        heartAlert.font = [UIFont systemFontOfSize:14];
         heartAlert.text = @"您可以通过勾选常用功能来定制快捷菜单，方便今后使用。";
         heartAlert.numberOfLines = 0;
         [footViewOfSection addSubview:heartAlert];
