@@ -158,11 +158,13 @@ static const CGFloat iconLabelFont = 13.0f;
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
         {
-            if (_favoriteIconDelegate && [_favoriteIconDelegate respondsToSelector:@selector(intoEditingModeOfLoveIconView:)]) {
-                [_favoriteIconDelegate intoEditingModeOfLoveIconView:self];
-            }
-            if (_favoriteIconLongGestureDelegate && [_favoriteIconLongGestureDelegate respondsToSelector:@selector(longGestureStateBegin:forLoveView:)]) {
-                [_favoriteIconLongGestureDelegate longGestureStateBegin:gesture forLoveView:self];
+            if (![_loveIconModel.name isEqualToString:@"添加"]) {
+                if (_favoriteIconDelegate && [_favoriteIconDelegate respondsToSelector:@selector(intoEditingModeOfLoveIconView:)]) {
+                    [_favoriteIconDelegate intoEditingModeOfLoveIconView:self];
+                }
+                if (_favoriteIconLongGestureDelegate && [_favoriteIconLongGestureDelegate respondsToSelector:@selector(longGestureStateBegin:forLoveView:)]) {
+                    [_favoriteIconLongGestureDelegate longGestureStateBegin:gesture forLoveView:self];
+                }
             }
         }
             break;

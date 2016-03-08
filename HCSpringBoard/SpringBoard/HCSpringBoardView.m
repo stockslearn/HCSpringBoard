@@ -504,6 +504,14 @@ const NSInteger drawIconTag = 222;
                     loveFolderView.loveFolderDelegate = self;
                     loveFolderView.loveFolderLongGestureDelegate = self;
                     
+                    //加动画
+                    CAKeyframeAnimation *rockAnimation = [CAKeyframeAnimation animation];
+                    rockAnimation.keyPath = @"transform.rotation";
+                    rockAnimation.values = @[@(angelToRandian(-3)),@(angelToRandian(3)),@(angelToRandian(-3))];
+                    rockAnimation.repeatCount = MAXFLOAT;
+                    rockAnimation.duration = 0.3;
+                    [loveFolderView.layer addAnimation:rockAnimation forKey:@"rocking"];
+                    
                     [_favoriteModelArray removeObjectAtIndex:fromIndex];
                     [_favoriteModelArray replaceObjectAtIndex:toIndex withObject:folderModel];
                     
