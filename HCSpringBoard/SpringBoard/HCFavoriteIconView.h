@@ -14,7 +14,6 @@
 
 - (void)deleteIconOfLoveIconView:(HCFavoriteIconView *)iconView;
 - (void)pushPageOfLoveIconView:(HCFavoriteIconView *)iconView;
-
 - (void)intoEditingModeOfLoveIconView:(HCFavoriteIconView *)iconView;
 
 @optional
