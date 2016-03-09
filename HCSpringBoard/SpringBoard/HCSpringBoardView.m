@@ -444,6 +444,7 @@ const NSInteger drawIconTag = 222;
             }
             
         }
+        [self toPageWithPoint:scrollPoint];
     }
     
 }
@@ -801,6 +802,8 @@ const NSInteger drawIconTag = 222;
     if (loveScrollView.contentOffset.x >= loveScrollView.contentSize.width) {
         lovePageControl.currentPage = lovePageControl.numberOfPages-1;
     }
+    
+    [self setCurrentPage:lovePageControl.currentPage];
 }
 - (void)updateAllFramesArray:(NSArray *)allIcons {
     pageCount = [self getPagesNumberWithAllIcon:allIcons.count
