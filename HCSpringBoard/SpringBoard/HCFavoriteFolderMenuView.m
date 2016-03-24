@@ -376,11 +376,12 @@
                     [_outsideFolderGestureDelegate loveFolderOutsideEndGesture:gesture menuView:self fromView:loveView];
                 }
             }
+            [self verifyFolderIconsCount];
             if (_folderMenuDelegate && [_folderMenuDelegate isKindOfClass:[HCFavoriteFolderFloatView class]]) {
                 HCFavoriteFolderFloatView *floatView = _folderMenuDelegate;
                 [floatView removeFromSuperview];
             }
-            [self verifyFolderIconsCount];
+            
             _isDrawOutside = NO;
         }
         
