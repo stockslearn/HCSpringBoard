@@ -8,6 +8,7 @@
 
 #import "HCBankListViewController.h"
 #import "HCFavoriteIconModel.h"
+#import "HCFavoriteFolderModel.h"
 
 @interface HCBankListViewController ()
 {
@@ -117,6 +118,32 @@
                         [self.allMenuModels removeObject:iconModel];
                     }
                 }
+                
+                for (int i = 0; i < self.allMenuModels.count; i++) {
+                    id model = self.allMenuModels[i];
+                    if ([model isKindOfClass:[HCFavoriteIconModel class]]) {
+                        HCFavoriteIconModel *iconModel = model;
+                        if ([iconModel.nodeIndex isEqualToString:loveModel.nodeIndex]) {
+                            NSInteger index = [self.allMenuModels indexOfObject:iconModel];
+                            [self.allMenuModels removeObjectAtIndex:index];
+                        }
+                    }
+                    else if ([model isKindOfClass:[HCFavoriteFolderModel class]]) {
+                        HCFavoriteFolderModel *folderModel = model;
+                        for (int j = 0; j < folderModel.iconModelsFolderArray.count; j++) {
+                            HCFavoriteIconModel *iconModel = folderModel.iconModelsFolderArray[j];
+                            if ([iconModel.nodeIndex isEqualToString:loveModel.nodeIndex]) {
+                                NSInteger index = [folderModel.iconModelsFolderArray indexOfObject:iconModel];
+                                [folderModel.iconModelsFolderArray removeObjectAtIndex:index];
+                                [folderModel.iconViewsFolderArray removeObjectAtIndex:index];
+                                if (folderModel.iconModelsFolderArray.count == 0) {
+                                    [self.allMenuModels removeObject:folderModel];
+                                }
+                            }
+                        }
+                    }
+                }
+                
                 loveModel.display = NO;
             }
         }

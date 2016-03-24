@@ -166,6 +166,7 @@
     rockAnimation.values = @[@(angelToRandian(-3)),@(angelToRandian(3)),@(angelToRandian(-3))];
     rockAnimation.repeatCount = MAXFLOAT;
     rockAnimation.duration = 0.3;
+    rockAnimation.removedOnCompletion = NO;
     
     for (int i=0; i<[_folderMenuIconArray count]; i++) {
         UIView *menuItemView = [_folderMenuIconArray objectAtIndex:i];
@@ -419,16 +420,20 @@
     if (_folderMenuModelArray.count == 0) {
         if (_folderMenuDelegate && [_folderMenuDelegate isKindOfClass:[HCFavoriteFolderFloatView class]]) {
             HCFavoriteFolderFloatView *floatView = _folderMenuDelegate;
-            [floatView.loveMainModels removeObject:floatView.loveFolderModel];
-            //刷新前腰序列化
-            [floatView.mySpringBoardDelegate archiverIconModelsArray];
-            [floatView.mySpringBoardDelegate archiverLoveMenuMainModel];
-            
-            if ([floatView.myControllerDelegate isKindOfClass:[ViewController class]]) {
-                [floatView.myControllerDelegate displayMenu];
+            if (floatView.mySpringBoardDelegate && [floatView.mySpringBoardDelegate isKindOfClass:[HCSpringBoardView class]]) {
+                HCSpringBoardView *mySB = floatView.mySpringBoardDelegate;
+                
+                NSInteger index = [mySB.favoriteModelArray indexOfObject:floatView.loveFolderModel];
+                [mySB.favoriteModelArray removeObjectAtIndex:index];
+                [mySB.favoriteViewArray removeObjectAtIndex:index];
+                //刷新前腰序列化
+                [floatView.myControllerDelegate archiverIconModelsArray];
+                [floatView.myControllerDelegate archiverLoveMenuMainModel];
+                //有值传入就会删除removeFromSuperView
+                [floatView hideFloatView:[[UIControl alloc] init]];
+                
+                [mySB updateMenuUIWithLoveIconArray];
             }
-            //有值传入就会删除removeFromSuperView
-            [floatView hideFloatView:[[UIControl alloc] init]];
         }
     }
 }

@@ -272,6 +272,7 @@ const NSInteger drawIconTag = 222;
                     rockAnimation.values = @[@(angelToRandian(-3)),@(angelToRandian(3)),@(angelToRandian(-3))];
                     rockAnimation.repeatCount = MAXFLOAT;
                     rockAnimation.duration = 0.3;
+                    rockAnimation.removedOnCompletion = NO;
                     [loveFolderView.layer addAnimation:rockAnimation forKey:@"rocking"];
                     
                     [_favoriteModelArray replaceObjectAtIndex:toIndex withObject:folderModel];
@@ -511,6 +512,7 @@ const NSInteger drawIconTag = 222;
                     rockAnimation.values = @[@(angelToRandian(-3)),@(angelToRandian(3)),@(angelToRandian(-3))];
                     rockAnimation.repeatCount = MAXFLOAT;
                     rockAnimation.duration = 0.3;
+                    rockAnimation.removedOnCompletion = NO;
                     [loveFolderView.layer addAnimation:rockAnimation forKey:@"rocking"];
                     
                     [_favoriteModelArray removeObjectAtIndex:fromIndex];
@@ -649,6 +651,7 @@ const NSInteger drawIconTag = 222;
     rockAnimation.values = @[@(angelToRandian(-3)),@(angelToRandian(3)),@(angelToRandian(-3))];
     rockAnimation.repeatCount = MAXFLOAT;
     rockAnimation.duration = 0.3;
+    rockAnimation.removedOnCompletion = NO;
     
     for (int i=0; i<[_favoriteViewArray count]-1; i++) {
         UIView *menuItemView = [_favoriteViewArray objectAtIndex:i];
