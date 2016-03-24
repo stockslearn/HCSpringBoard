@@ -217,11 +217,18 @@
     
     if (_folderMenuDelegate && [_folderMenuDelegate isKindOfClass:[HCFavoriteFolderFloatView class]]) {
         HCFavoriteFolderFloatView *floatView = _folderMenuDelegate;
-        [floatView hideFloatView:[[UIControl alloc] init]];
-        
         if (floatView.mySpringBoardDelegate && [floatView.mySpringBoardDelegate isKindOfClass:[HCSpringBoardView class]]) {
             HCSpringBoardView *sb = floatView.mySpringBoardDelegate;
-            [sb pushPageOfLoveIconView:iconView];
+            
+            if (sb.isEdit) {
+                [sb doneButtonAction:nil];
+                [self stopLittleIconAnimation];
+                self.isEdit = NO;
+            }
+            else {
+                [floatView hideFloatView:[[UIControl alloc] init]];
+                [sb pushPageOfLoveIconView:iconView];
+            }
         }
     }
 }
@@ -400,6 +407,13 @@
         }
         
         [_drawLoveIconView removeFromSuperview];
+    }
+}
+#pragma mark - 结束文件夹里的图标编辑模式
+- (void)stopLittleIconAnimation {
+    for (HCFavoriteIconView *icon in _folderMenuIconArray) {
+        icon.isEditing = NO;
+        [icon.layer removeAnimationForKey:@"rocking"];
     }
 }
 #pragma mark - 更新全菜单的display属性

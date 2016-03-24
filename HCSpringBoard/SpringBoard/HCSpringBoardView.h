@@ -49,4 +49,5 @@ HCLoveFolderLongGestureDelegate
 - (void)updateIconModelDisplay:(HCFavoriteIconModel *)allModel nodeIndex:(NSString *)nodel;
 
 - (void)updateMenuUIWithLoveIconArray;
+- (void)doneButtonAction:(id)sender;
 @end
