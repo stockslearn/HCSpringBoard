@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'HCSpringBoard_Example' do
+  pod 'HCSpringBoard', :path => '../'
+
+  target 'HCSpringBoard_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
