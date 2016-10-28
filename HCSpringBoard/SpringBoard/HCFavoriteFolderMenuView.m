@@ -442,8 +442,8 @@
                 [mySB.favoriteModelArray removeObjectAtIndex:index];
                 [mySB.favoriteViewArray removeObjectAtIndex:index];
                 //刷新前腰序列化
-                [floatView.myControllerDelegate archiverIconModelsArray];
-                [floatView.myControllerDelegate archiverLoveMenuMainModel];
+                [floatView.mySpringBoardDelegate archiverIconModelsArray];
+                [floatView.mySpringBoardDelegate archiverLoveMenuMainModel];
                 //有值传入就会删除removeFromSuperView
                 [floatView hideFloatView:[[UIControl alloc] init]];
                 
