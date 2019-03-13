@@ -46,11 +46,11 @@ const NSInteger drawIconTag = 222;
         self.userInteractionEnabled = YES;
         
         allFrame = [[NSMutableArray alloc]init];
-        NSInteger rowOnePage = [self getOnePageRomByDevice];
-        iconsOnePageFrameArray = [self getOnePageIconsFrameArrayWithRowNumber:rowOnePage];
+        NSInteger rowOnePage = [self getOnePageRomByDevice];//一页可以布局的行数  3/4
+        iconsOnePageFrameArray = [self getOnePageIconsFrameArrayWithRowNumber:rowOnePage];//计算的一页九宫格的rect数组(与模型无关)
         //单页icon数
-        onePageSize = rowOnePage * 3;
-        NSInteger allPageSize = [models count];
+        onePageSize = rowOnePage * 3; //每一页可以显示的最大icon数
+        NSInteger allPageSize = [models count];//总共的模型个数
         pageCount = [self getPagesNumberWithAllIcon:allPageSize
                                      andOnePageIcon:onePageSize];
         
@@ -60,10 +60,12 @@ const NSInteger drawIconTag = 222;
                                                    andOnePageIcon:onePageSize];
         
         CGRect scrollRect = CGRectMake(0, 40, ScreenWidth, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_LEVEL_SPACE)+1);
-        loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
+        NSLog(@"scrollRect---%@",NSStringFromCGRect(scrollRect));//
+        loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];//frame VS contentSize 即w,h决定scrollView的内容
+                                                                        //而frame决定scrollView的位置和大小
         loveScrollView.bounces = NO;
         loveScrollView.pagingEnabled = YES;
-        loveScrollView.backgroundColor = [UIColor whiteColor];
+        loveScrollView.backgroundColor = [UIColor grayColor];
         loveScrollView.showsHorizontalScrollIndicator = NO;
         loveScrollView.showsVerticalScrollIndicator = NO;
         loveScrollView.delegate = self;
@@ -73,7 +75,7 @@ const NSInteger drawIconTag = 222;
                            initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+10, ScreenWidth, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
-//        lovePageControl.backgroundColor = [UIColor redColor];
+        lovePageControl.backgroundColor = [UIColor redColor];
         [self addSubview: lovePageControl];
         
         pagesView = [[NSMutableArray alloc]init];
@@ -91,9 +93,10 @@ const NSInteger drawIconTag = 222;
             CGRect loveIconRect = CGRectFromString(allFrame[i]);
             
             id model = models[i];
-            if ([model isKindOfClass:[HCFavoriteFolderModel class]]) {
+            if ([model isKindOfClass:[HCFavoriteFolderModel class]]) {//HCFavoriteFolderModel VS HCFavoriteIconModel
                 HCFavoriteFolderModel *folderModel = model;
                 HCFavoriteFolderView *loveFolderView = [[HCFavoriteFolderView alloc]initWithFrame:loveIconRect model:folderModel];
+                NSLog(@"%@",@"HCFavoriteFolderView");
                 //代理要处理手势和点击等事件
                 loveFolderView.loveFolderDelegate = self;
                 loveFolderView.loveFolderLongGestureDelegate = self;
@@ -104,6 +107,7 @@ const NSInteger drawIconTag = 222;
             else if ([model isKindOfClass:[HCFavoriteIconModel class]]) {
                 HCFavoriteIconModel *loveIconModel = model;
                 HCFavoriteIconView *loveIconView = [[HCFavoriteIconView alloc]initWithFrame:loveIconRect model:loveIconModel];
+                NSLog(@"%@",@"HCFavoriteIconView");
                 //代理要处理手势和点击等事件
                 loveIconView.favoriteIconDelegate = self;
                 loveIconView.favoriteIconLongGestureDelegate = self;
@@ -136,7 +140,7 @@ const NSInteger drawIconTag = 222;
     loveView.hidden = YES;
 }
 - (void)longGestureStateMove:(UILongPressGestureRecognizer *)gesture forLoveView:(HCFavoriteIconView *)loveView{
-    //    NSLog(@"change");
+    NSLog(@"change");
     CGPoint pointAtWindow = [gesture locationInView:AppWindow];
     CGPoint currentOrigin = CGPointMake(pointAtWindow.x-lastPoint.x, pointAtWindow.y-lastPoint.y);
     if (_isDraw) {
@@ -909,8 +913,8 @@ const NSInteger drawIconTag = 222;
 
 #pragma mark - 贴上PageView
 - (void)layoutWithPages:(CGRect)pageRect{
-    loveScrollView.contentOffset = CGPointMake(0.0, 0.0);
-    loveScrollView.contentSize = CGSizeMake(CGRectGetWidth(pageRect) * [pagesView count], CGRectGetHeight(loveScrollView.frame));
+    loveScrollView.contentOffset = CGPointMake(0.0, 0.0);//scrollView的其他属性设置
+    loveScrollView.contentSize = CGSizeMake(CGRectGetWidth(pageRect) * [pagesView count], CGRectGetHeight(loveScrollView.frame));//分页？？？
     lovePageControl.numberOfPages = [pagesView count];
     lovePageControl.currentPage = 0;
     
@@ -930,6 +934,7 @@ const NSInteger drawIconTag = 222;
         UIView *line = nil;
         line = [[UIView alloc]initWithFrame:CGRectMake(0, i*(ICONIMG_HEIGHT+ICONIMG_VERTICAL_SPACE), ScreenWidth, 0.5)];
         line.backgroundColor = [UIColor lightGrayColor];
+        line.backgroundColor = [UIColor redColor];
         line.alpha = 0.5;
         [page addSubview:line];
     }
@@ -938,6 +943,7 @@ const NSInteger drawIconTag = 222;
         UILabel *line = nil;
         line = [[UILabel alloc] initWithFrame:CGRectMake((ICONIMG_WIDTH+0.5)*i, 0.5, 0.5, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_VERTICAL))];
         line.backgroundColor = [UIColor lightGrayColor];
+        line.backgroundColor = [UIColor redColor];
         line.alpha = 0.5;
         [page addSubview:line];
     }
@@ -949,15 +955,15 @@ const NSInteger drawIconTag = 222;
     NSMutableArray *pagesFramesArray = [[NSMutableArray alloc]init];
     indexRectArray = [[NSMutableArray alloc]init];
     
-    for (NSInteger i = 0; i < pageCounts; i++) {
+    for (NSInteger i = 0; i < pageCounts; i++) {//页码
         for (NSInteger j = 0; j < onePage; j++) {
-            CGRect iconRect = CGRectFromString(onePageArray[j]);
-            iconRect.origin.x += i * ScreenWidth;//屏幕宽既是scrollview的宽
+            CGRect iconRect = CGRectFromString(onePageArray[j]);//内部循环
+            iconRect.origin.x += i * ScreenWidth;//屏幕宽既是scrollview的宽-----修改的对应页面的x值
             NSString *iconRectString = NSStringFromCGRect(iconRect);
             
             [pagesFramesArray addObject:iconRectString];
             
-            NSInteger index = j + onePage*i;
+            NSInteger index = j + onePage*i;//每一个icon的顺序  
             
             //组织判断区域
             HCIndexRect *indexRect = [[HCIndexRect alloc]initWithIndex:index rect:iconRect];
@@ -966,7 +972,7 @@ const NSInteger drawIconTag = 222;
     }
     
     
-    
+    NSLog(@"pagesFramesArray-%lu-%@",(unsigned long)pagesFramesArray.count,pagesFramesArray);
     return pagesFramesArray;
 }
 #pragma mark - 判断需要几页
